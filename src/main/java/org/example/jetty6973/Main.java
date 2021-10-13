@@ -40,5 +40,5 @@ public class Main {
     private static class CustomRequestLog extends RequestLogImpl implements LifeCycle {
         private CustomRequestLog() {
         }
-}
+    }
 }
