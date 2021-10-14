@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration debug="true">
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/tmp/log/jetty-6973/access.log</file>
+        <file>logs/access.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/tmp/log/jetty-6973/access.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>logs/access.%d{yyyy-MM-dd}.log</fileNamePattern>
         </rollingPolicy>
 
         <encoder>

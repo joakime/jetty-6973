@@ -1,17 +1,26 @@
 package org.example.jetty6973;
 
 import ch.qos.logback.access.jetty.RequestLogImpl;
+import org.eclipse.jetty.http.HttpFields;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.handler.ErrorHandler;
 import org.eclipse.jetty.util.component.LifeCycle;
 
 import java.io.DataOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Server server = new Server(8180);
+        int port = 8180;
+        Server server = new Server();
+        ServerConnector connector = new ServerConnector(server);
+        connector.setPort(port);
+        connector.addBean(new HttpListener());
+        server.addConnector(connector);
 
         RequestLogImpl requestLog = new CustomRequestLog();
         requestLog.setFileName(Main.class.getClassLoader().getResource("logback-access.xml").getFile());
@@ -27,7 +36,7 @@ public class Main {
         server.start();
 
 
-        Socket socket = new Socket("localhost", 8180);
+        Socket socket = new Socket("localhost", port);
         OutputStream outputStream = socket.getOutputStream();
         DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
         dataOutputStream.write(request);
